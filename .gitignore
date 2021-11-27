@@ -1,0 +1,9 @@
+node_modules/
+frontend/node_modules/
+cache/
+.netlify/
+.DS_Store
+yarn-error.log
+
+# Local Netlify folder
+.netlify

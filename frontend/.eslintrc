@@ -1,0 +1,77 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "react",
+    "jest",
+    "@babel"
+  ],
+  "settings" : {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    },
+    "react": {
+      "pragma": "React",
+      "version": "16.4"
+    }
+  },
+  "rules": { // 0=off, 1=warn, 2=error. Defaults to 0.
+    "semi": [2, "never"],
+    "no-multi-spaces": [2, {
+      "exceptions": {
+        "VariableDeclaration": true,
+        "ImportDeclaration": true
+      }
+    }],
+    "comma-dangle": [2, "never"],
+    "key-spacing": [2, {
+      "singleLine": {
+        "beforeColon": false,
+        "afterColon": true
+      }
+    }],
+    "arrow-body-style": "off",
+    "react/jsx-filename-extension": [0, { "extensions": [".js"] }],
+    "import/no-extraneous-dependencies": [0, {"devDependencies": true}],
+    "import/extensions": [0, "0", {
+      "js": "never",
+      "jsx": "never",
+    }],
+    "react/prefer-stateless-function": "off",
+    "react/no-unused-prop-types": [2, {
+      "skipShapeProps": false
+    }],
+    "import/prefer-default-export": "off",
+    "function-paren-newline": "off",
+    "jsx-a11y/label-has-for": "off",
+    "react/jsx-no-bind": [2, {
+      "allowBind": true
+    }],
+    "react/no-did-update-set-state": "off",
+    "import/no-unresolved": "off",
+    "jest/expect-expect": [
+      "off",
+      {
+        "assertFunctionNames": ["expect", "fc.assert"]
+      }
+    ],
+    "template-curly-spacing": "off"
+  }
+}
