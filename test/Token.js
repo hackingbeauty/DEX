@@ -47,6 +47,27 @@ describe("Token contract", function () {
     await hardhatToken.deployed();
   });
 
+  describe('Allowance', function () {
+    it('should return 0 when no allowance', async function () {
+      const firstAllowance = await hardhatToken.allowance(owner.address, addr1.address);
+      expect(firstAllowance).to.equal(0);
+    });
+
+    it('Should aprove for allowances between accounts', async function () {
+      await hardhatToken.approve(addr1.address, 100);
+      const secondAllowance = await hardhatToken.allowance(owner.address, addr1.address);
+      expect(secondAllowance).to.equal(100);
+    });
+
+    it('Should transfer from allower to allowed', async function () {
+      await hardhatToken.approve(addr1.address, 100);
+      await hardhatToken.transferFrom(owner.address, addr1.address, 70);
+
+      const thirdAllowance = await hardhatToken.allowance(owner.address, addr1.address);
+      expect(thirdAllowance).to.equal(30);
+    });
+  });
+
   // You can nest describe calls to create subsections.
   describe("Deployment", function () {
     // `it` is another Mocha function. This is the one you use to define your
