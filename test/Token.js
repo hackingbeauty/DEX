@@ -36,36 +36,15 @@ describe("Token contract", function () {
     // Get the ContractFactory and Signers here.
     Token = await ethers.getContractFactory("Token");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
-
+    
     // To deploy our contract, we just have to call Token.deploy() and await
     // for it to be deployed(), which happens onces its transaction has been
     // mined.
     hardhatToken = await Token.deploy();
-    await hardhatToken.deployed();
+    await hardhatToken.deployed();//simula que la transaccion fue firmada
 
     // We can interact with the contract by calling `hardhatToken.method()`
     await hardhatToken.deployed();
-  });
-
-  describe('Allowance', function () {
-    it('should return 0 when no allowance', async function () {
-      const firstAllowance = await hardhatToken.allowance(owner.address, addr1.address);
-      expect(firstAllowance).to.equal(0);
-    });
-
-    it('Should aprove for allowances between accounts', async function () {
-      await hardhatToken.approve(addr1.address, 100);
-      const secondAllowance = await hardhatToken.allowance(owner.address, addr1.address);
-      expect(secondAllowance).to.equal(100);
-    });
-
-    it('Should transfer from allower to allowed', async function () {
-      await hardhatToken.approve(addr1.address, 100);
-      await hardhatToken.transferFrom(owner.address, addr1.address, 70);
-
-      const thirdAllowance = await hardhatToken.allowance(owner.address, addr1.address);
-      expect(thirdAllowance).to.equal(30);
-    });
   });
 
   // You can nest describe calls to create subsections.
@@ -92,7 +71,7 @@ describe("Token contract", function () {
   describe("Transactions", function () {
     it("Should transfer tokens between accounts", async function () {
       // Transfer 50 tokens from owner to addr1
-      await hardhatToken.transfer(addr1.address, 50);
+      await hardhatToken.transfer(addr1.address, 50);//tiene por default al owner de msg.sender de la transaccion
       const addr1Balance = await hardhatToken.balanceOf(
         addr1.address
       );
@@ -100,7 +79,7 @@ describe("Token contract", function () {
 
       // Transfer 50 tokens from addr1 to addr2
       // We use .connect(signer) to send a transaction from another account
-      await hardhatToken.connect(addr1).transfer(addr2.address, 50);
+      await hardhatToken.connect(addr1).transfer(addr2.address, 50);//por default esta connect to owner, aca lo cambiamos a addr1
       const addr2Balance = await hardhatToken.balanceOf(
         addr2.address
       );
@@ -116,7 +95,9 @@ describe("Token contract", function () {
       // `require` will evaluate false and revert the transaction.
       await expect(
         hardhatToken.connect(addr1).transfer(owner.address, 1)
-      ).to.be.revertedWith("Not enough tokens");
+      ).to.be.revertedWith("Not enough tokens");//each time it connects from an addr other than the owners, it will connect()
+      //revertedWith es el error msg
+      
 
       // Owner balance shouldn't have changed.
       expect(await hardhatToken.balanceOf(owner.address)).to.equal(
