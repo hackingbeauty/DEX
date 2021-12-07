@@ -88,4 +88,5 @@ To compile the contract run "npx hardhat compile" in your terminal. The compile 
 $ npx hardhat compile
 Compiling 1 file with 0.7.3
 Compilation finished successfully
-```
+```"# erc20" 
+"# erc20" 
